@@ -1,0 +1,45 @@
+Отчёт о коммитах (git shortlog)
+Ревизия:     main = 17923de (2026-09-11 19:00:51 +0200)
+Сформирован: 2026-09-11 19:00:52 +0200
+Команда:     sh scripts/shortlog_report.sh main > reports/shortlog.txt
+Коммиты, сделанные после указанной ревизии, в отчёт не входят.
+
+== 1. Авторы и количество коммитов
+$ git shortlog -sne main
+    11	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
+
+== 2. То же без merge-коммитов
+$ git shortlog -sne --no-merges main
+    10	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
+
+== 3. Количество коммитов по дням
+$ git shortlog -s --group=format:%cs main
+    11	2026-09-11
+
+== 4. Количество коммитов по типам Conventional Commits
+$ git log --format=%s main | sed -E 's/^(fixup! )?([a-z]+)(\(.*\))?:.*/\2/' | sort | uniq -c | sort -rn
+      4 feat
+      3 docs
+      2 chore
+      1 test
+      1 merge
+
+== 5. Сравнение: коммиты во всех ветках
+$ git shortlog -sn --all
+    15	Sergey Bockanov
+
+== 6. Коммиты, сгруппированные по авторам
+$ git shortlog main
+Sergey Bockanov (11):
+      feat: создать пакет textlab с функцией приветствия
+      feat: выводить текущую дату и версию Python
+      chore: добавить .gitignore для Python-проекта
+      docs: добавить README с описанием проекта
+      feat: добавить модуль text_stats с подсчётом слов
+      feat: выводить статистику текста при запуске
+      test: добавить модульные тесты для text_stats
+      merge: влить ветку feature/text-stats в main
+      docs: добавить разбор истории репозитория 2dust/v2rayN
+      docs: описать переписывание истории ветки через git rebase
+      chore: добавить скрипт формирования отчёта git shortlog
+
