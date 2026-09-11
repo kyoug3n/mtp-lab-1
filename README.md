@@ -329,37 +329,38 @@ sh scripts/shortlog_report.sh main > reports/shortlog.txt
 сравнение со всеми ветками (`--all`) и полный список коммитов по авторам (`git shortlog`).
 
 В начале [`reports/shortlog.txt`](reports/shortlog.txt) записаны ревизия, дата формирования
-и команда — отчёт отражает историю ровно на коммите `17923de` (коммит, добавивший скрипт),
-а более поздние коммиты в него не входят. Чтобы получить актуальный отчёт, достаточно
-заново запустить скрипт.
+и команда. Отчёт перегенерирован последним коммитом репозитория и отражает историю на коммите
+`35bfebe` — предыдущем перед ним; единственный коммит, не вошедший в отчёт, — сам коммит
+с обновлённым отчётом. Чтобы получить отчёт на любой момент, достаточно заново запустить скрипт.
 
 Фрагмент отчёта:
 
 ```
 Отчёт о коммитах (git shortlog)
-Ревизия:     main = 17923de (2026-09-11 19:00:51 +0200)
-Сформирован: 2026-09-11 19:00:52 +0200
+Ревизия:     main = 35bfebe (2026-09-11 19:30:54 +0200)
+Сформирован: 2026-09-11 19:44:02 +0200
 Команда:     sh scripts/shortlog_report.sh main > reports/shortlog.txt
 Коммиты, сделанные после указанной ревизии, в отчёт не входят.
 
 == 1. Авторы и количество коммитов
 $ git shortlog -sne main
-    10	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
+    16	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
 
 == 4. Количество коммитов по типам Conventional Commits
 $ git log --format=%s main | sed -E 's/^(fixup! )?([a-z]+)(\(.*\))?:.*/\2/' | sort | uniq -c | sort -rn
+      7 docs
       4 feat
-      3 docs
+      2 chore
       1 test
+      1 style
       1 merge
-      1 chore
 
 == 5. Сравнение: коммиты во всех ветках
 $ git shortlog -sn --all
-    14	Sergey Bockanov
+    20	Sergey Bockanov
 ```
 
-Почему во всех ветках коммитов больше, чем в `main` (14 против 10): `--all` учитывает
+Почему во всех ветках коммитов больше, чем в `main` (20 против 16): `--all` учитывает
 и 4 исходных коммита ветки `backup/feature-before-rebase`, которые после rebase были заменены
 новыми и в `main` не входят. Поэтому основной отчёт строится по `main`.
 
@@ -383,10 +384,13 @@ origin	https://github.com/kyoug3n/mtp-lab-1.git (fetch)
 origin	https://github.com/kyoug3n/mtp-lab-1.git (push)
 ```
 
-Подписи коммитов `main` (`git log --format='%h %G? %an | %s' main`, `G` — корректная подпись);
-на GitHub все коммиты отмечены как *Verified*:
+Подписи коммитов `main` на коммите `35bfebe` (`git log --format='%h %G? %an | %s' main`,
+`G` — корректная подпись); на GitHub все коммиты отмечены как *Verified*:
 
 ```
+35bfebe G Sergey Bockanov | docs: добавить оглавление и вывод тестов, уточнить сравнение веток Git и SVN
+c618e94 G Sergey Bockanov | docs: указать команды проверки, работающие в свежем клоне
+446d17d G Sergey Bockanov | docs: описать выполнение заданий варианта 4 в README
 b581e67 G Sergey Bockanov | style: перенести длинные строки в main.py по PEP 8
 7386877 G Sergey Bockanov | docs: добавить отчёт о коммитах git shortlog
 17923de G Sergey Bockanov | chore: добавить скрипт формирования отчёта git shortlog
@@ -404,12 +408,15 @@ adbccff G Sergey Bockanov | feat: создать пакет textlab с функ�
 
 ## История коммитов
 
-Граф снят на коммите `b581e67`, до публикации README; все более поздние коммиты `main` —
-`docs:`-коммиты, меняющие только `README.md` и `docs/`
-(проверка: `git log --stat b581e67..main`). Команда: `git log --graph --oneline --all --decorate`.
+Граф, список подписей и отчёт `shortlog` сняты на коммите `35bfebe`. После него в `main`
+только один коммит — тот, что обновил `README.md` и `reports/shortlog.txt`
+(проверка: `git log --stat 35bfebe..main`). Команда: `git log --graph --oneline --all --decorate`.
 
 ```
-* b581e67 (HEAD -> main, origin/main, origin/HEAD) style: перенести длинные строки в main.py по PEP 8
+* 35bfebe (HEAD -> main, origin/main, origin/HEAD) docs: добавить оглавление и вывод тестов, уточнить сравнение веток Git и SVN
+* c618e94 docs: указать команды проверки, работающие в свежем клоне
+* 446d17d docs: описать выполнение заданий варианта 4 в README
+* b581e67 style: перенести длинные строки в main.py по PEP 8
 * 7386877 docs: добавить отчёт о коммитах git shortlog
 * 17923de chore: добавить скрипт формирования отчёта git shortlog
 * 76eb8d5 docs: описать переписывание истории ветки через git rebase

@@ -1,36 +1,37 @@
 Отчёт о коммитах (git shortlog)
-Ревизия:     main = 17923de (2026-09-11 19:00:51 +0200)
-Сформирован: 2026-09-11 19:00:52 +0200
+Ревизия:     main = 35bfebe (2026-09-11 19:30:54 +0200)
+Сформирован: 2026-09-11 19:44:02 +0200
 Команда:     sh scripts/shortlog_report.sh main > reports/shortlog.txt
 Коммиты, сделанные после указанной ревизии, в отчёт не входят.
 
 == 1. Авторы и количество коммитов
 $ git shortlog -sne main
-    11	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
+    16	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
 
 == 2. То же без merge-коммитов
 $ git shortlog -sne --no-merges main
-    10	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
+    15	Sergey Bockanov <199808151+kyoug3n@users.noreply.github.com>
 
 == 3. Количество коммитов по дням
 $ git shortlog -s --group=format:%cs main
-    11	2026-09-11
+    16	2026-09-11
 
 == 4. Количество коммитов по типам Conventional Commits
 $ git log --format=%s main | sed -E 's/^(fixup! )?([a-z]+)(\(.*\))?:.*/\2/' | sort | uniq -c | sort -rn
+      7 docs
       4 feat
-      3 docs
       2 chore
       1 test
+      1 style
       1 merge
 
 == 5. Сравнение: коммиты во всех ветках
 $ git shortlog -sn --all
-    15	Sergey Bockanov
+    20	Sergey Bockanov
 
 == 6. Коммиты, сгруппированные по авторам
 $ git shortlog main
-Sergey Bockanov (11):
+Sergey Bockanov (16):
       feat: создать пакет textlab с функцией приветствия
       feat: выводить текущую дату и версию Python
       chore: добавить .gitignore для Python-проекта
@@ -42,4 +43,9 @@ Sergey Bockanov (11):
       docs: добавить разбор истории репозитория 2dust/v2rayN
       docs: описать переписывание истории ветки через git rebase
       chore: добавить скрипт формирования отчёта git shortlog
+      docs: добавить отчёт о коммитах git shortlog
+      style: перенести длинные строки в main.py по PEP 8
+      docs: описать выполнение заданий варианта 4 в README
+      docs: указать команды проверки, работающие в свежем клоне
+      docs: добавить оглавление и вывод тестов, уточнить сравнение веток Git и SVN
 
