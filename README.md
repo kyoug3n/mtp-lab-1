@@ -72,13 +72,13 @@ python -m unittest -v         # тесты
 Средняя длина слова: 6.00
 ```
 
-Команды для проверки истории:
+Команды для проверки истории (в свежем клоне ветки, кроме `main`, доступны как `origin/<имя>`):
 
 ```bash
 git log --graph --oneline --all --decorate
 git show --name-status 78baeea                          # средняя №4
 git show --no-patch --format='%h %p %s' 761bc8d          # средняя №6: два родителя
-git range-diff main backup/feature-before-rebase feature/text-stats   # повышенная №5
+git range-diff 719df10..origin/backup/feature-before-rebase 2db1163..origin/feature/text-stats   # повышенная №5
 sh scripts/shortlog_report.sh                            # повышенная №9
 ```
 
@@ -269,8 +269,9 @@ a59f7b2 feat: добавить модуль text_stats …               2db1163
 719df10 chore: добавить .gitignore …   (старая база)     719df10 chore: добавить .gitignore …
 ```
 
-Сопоставление коммитов (`git range-diff main backup/feature-before-rebase feature/text-stats`,
-без diff-фрагментов):
+Сопоставление коммитов
+(`git range-diff 719df10..backup/feature-before-rebase 2db1163..feature/text-stats`,
+без diff-фрагментов; диапазоны заданы от старой и новой базы ветки):
 
 ```
 1:  a59f7b2 ! 1:  38ebd45 feat: добавить модуль text_stats с подсчётом слов
@@ -373,8 +374,9 @@ adbccff G Sergey Bockanov | feat: создать пакет textlab с функ�
 
 ## История коммитов
 
-Граф снят перед коммитом, добавившим этот README; после него в `main` есть только этот коммит
-(`git log --graph --oneline --all --decorate`):
+Граф снят на коммите `b581e67`, до публикации README; все более поздние коммиты `main` —
+`docs:`-коммиты, меняющие только `README.md` и `docs/`
+(проверка: `git log --stat b581e67..main`). Команда: `git log --graph --oneline --all --decorate`.
 
 ```
 * b581e67 (HEAD -> main, origin/main, origin/HEAD) style: перенести длинные строки в main.py по PEP 8

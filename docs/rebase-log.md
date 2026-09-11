@@ -20,6 +20,9 @@
 Чтобы исходную историю можно было сравнить с результатом, перед rebase от ветки создана
 резервная ветка **`backup/feature-before-rebase`**; она отправлена на GitHub вместе с остальными.
 
+Команды ниже приведены так, как выполнялись в локальном репозитории. В свежем клоне к именам
+веток `feature/text-stats` и `backup/feature-before-rebase` нужно добавить префикс `origin/`.
+
 ## История до rebase
 
 `git log --graph --format='%h %s' 719df10^..backup/feature-before-rebase`:
@@ -139,7 +142,8 @@ Successfully rebased and updated refs/heads/feature/text-stats.
 
 ## Сопоставление старых и новых коммитов
 
-`git range-diff main backup/feature-before-rebase feature/text-stats`:
+`git range-diff 719df10..backup/feature-before-rebase 2db1163..feature/text-stats`
+(в свежем клоне — с префиксом `origin/` у имён веток):
 
 ```
 1:  a59f7b2 ! 1:  38ebd45 feat: добавить модуль text_stats с подсчётом слов
@@ -166,6 +170,12 @@ Successfully rebased and updated refs/heads/feature/text-stats.
       ## tests/__init__.py (new) ##
      
 ```
+
+Каждый диапазон отсчитывается от своей базы: старая версия ветки — от `719df10`, новая — от
+`2db1163`. Сразу после rebase то же сравнение давала короткая форма
+`git range-diff main backup/feature-before-rebase feature/text-stats`, но после слияния
+новые коммиты уже входят в `main`, и короткая форма перестаёт работать — поэтому здесь
+диапазоны указаны явно.
 
 Как читать: `!` — коммит изменён (в первый вошла правка из fixup, у последнего новое сообщение),
 `=` — содержимое совпадает, `<` — коммит есть только в старой версии (fixup склеен).
