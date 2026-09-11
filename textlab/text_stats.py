@@ -5,7 +5,8 @@ import re
 WORD_PATTERN = re.compile(r"[a-zа-яё0-9]+", re.IGNORECASE)
 
 
-def words(text: str):
+def words(text: str) -> list[str]:
+    """Разбить текст на слова в нижнем регистре."""
     return WORD_PATTERN.findall(text.lower())
 
 
