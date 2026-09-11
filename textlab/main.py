@@ -5,7 +5,9 @@ from datetime import date
 
 from textlab import text_stats
 
-SAMPLE_TEXT = "Git хранит историю проекта, а ветки позволяют вести работу параллельно."
+SAMPLE_TEXT = (
+    "Git хранит историю проекта, а ветки позволяют вести работу параллельно."
+)
 
 
 def greet(name: str) -> str:
@@ -23,7 +25,8 @@ def main() -> None:
     print(greet("Git"))
     print(environment_info())
     print(f"Слов в примере: {text_stats.word_count(SAMPLE_TEXT)}")
-    print(f"Средняя длина слова: {text_stats.average_word_length(SAMPLE_TEXT):.2f}")
+    average = text_stats.average_word_length(SAMPLE_TEXT)
+    print(f"Средняя длина слова: {average:.2f}")
 
 
 if __name__ == "__main__":
